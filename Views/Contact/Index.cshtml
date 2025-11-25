@@ -1,0 +1,63 @@
+@model List<SezenElifCaba_BlogSitesi.Models.Entities.Contact>
+@{
+    ViewData["Title"] = "Gelen Kutusu";
+}
+
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col">
+            <h2>Gelen Kutusu</h2>
+            <div class="text-muted">Toplam Mesaj: @Model.Count</div>
+        </div>
+    </div>
+    <div class="card shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ad Soyad</th>
+                        <th>E-posta</th>
+                        <th>Mesaj</th>
+                        <th>Durum</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var m in Model)
+                    {
+                        <tr>
+                            <td>@m.ContactID</td>
+                            <td>@m.Name @m.Surname</td>
+                            <td>@m.Email</td>
+                            <td class="text-truncate" style="max-width: 420px;">@m.Message</td>
+                            <td>
+                                @if (m.IsRead)
+                                {
+                                    <span class="badge bg-success">Okundu</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Okunmadı</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@m.ContactID">Görüntüle</a>
+                                <form asp-action="ToggleRead" method="post" class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@m.ContactID" />
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">@((m.IsRead) ? "Okunmadı Yap" : "Okundu Yap")</button>
+                                </form>
+                                <form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('Mesaj silinsin mi?');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@m.ContactID" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@model Project
+
+@{
+    ViewData["Title"] = "Proje Detayı";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="mb-0">Proje Detayları</h2>
+            <div class="text-muted">Projenin tüm bilgileri</div>
+        </div>
+        <div class="col-auto d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model?.ProjectID" class="btn btn-primary">
+                <i class="bi bi-pencil me-2"></i>Düzenle
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i>Proje Listesi
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Proje Bilgileri</h5>
+                        <span class="badge bg-success">Proje</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">Proje Başlığı</label>
+                            <div class="p-2 bg-light rounded">@Model.ProjectTitle</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">Proje Tarihi</label>
+                            <div class="p-2 bg-light rounded">@Model.ProjectDate.ToLongDateString()</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold text-muted">Proje Açıklaması</label>
+                            <div class="p-3 bg-light rounded">@Html.Raw(Model.ProjectDesc)</div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.ProjectPhoto))
+                        {
+                            <div class="col-12">
+                                <label class="form-label fw-semibold text-muted">Proje Fotoğrafı</label>
+                                <div class="ratio ratio-16x9">
+                                    <img src="/images/Projeimg/@Model.ProjectPhoto" class="img-fluid object-cover rounded" alt="@Model.ProjectTitle" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h6 class="mb-0">Proje Özeti</h6>
+                </div>
+                <div class="card-body">
+                    <div class="project-summary">
+                        <p class="text-muted mb-3">Bu proje hakkında detaylı bilgiler:</p>
+                        <div class="d-flex flex-column gap-2">
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Proje ID:</span>
+                                <span class="fw-semibold">#@Model.ProjectID</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Durum:</span>
+                                <span class="badge bg-success">Tamamlandı</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Kategori:</span>
+                                <span class="fw-semibold">Web Projesi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

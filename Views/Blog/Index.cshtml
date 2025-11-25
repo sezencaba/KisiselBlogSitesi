@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Blog>
+
+@{
+    ViewData["Title"] = "Blog Yazıları";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="mb-0">Blog Yazıları</h2>
+            <div class="text-muted">Tüm blog yazılarınızı yönetin</div>
+        </div>
+        <div class="col-auto">
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>Yeni Blog Yazısı
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card shadow-sm h-100">
+                    @if (!string.IsNullOrEmpty(item.BlogPhoto))
+                    {
+                        <div class="ratio ratio-16x9">
+                            <img src="/images/Blogimg/@item.BlogPhoto" class="card-img-top object-cover" alt="@item.Title" />
+                        </div>
+                    }
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <small class="text-muted">@item.BlogDate.ToShortDateString()</small>
+                            <span class="badge bg-primary">Blog</span>
+                        </div>
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text text-muted flex-grow-1">@item.BlogText</p>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a asp-action="Edit" asp-route-id="@item.BlogID" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil me-1"></i>Düzenle
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.BlogID" class="btn btn-sm btn-outline-info">
+                                <i class="bi bi-eye me-1"></i>Detay
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.BlogID" class="btn btn-sm btn-outline-danger" 
+                               onclick="return confirm('Blog yazısını silmek istediğinizden emin misiniz?')">
+                                <i class="bi bi-trash me-1"></i>Sil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-journal-richtext fs-1 text-muted mb-3"></i>
+            <h4 class="text-muted">Henüz blog yazısı yok</h4>
+            <p class="text-muted">İlk blog yazınızı oluşturmak için yukarıdaki butona tıklayın.</p>
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>İlk Blog Yazısını Oluştur
+            </a>
+        </div>
+    }
+</div>

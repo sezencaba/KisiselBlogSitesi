@@ -1,0 +1,55 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = "~/Views/Shared/_Auth.cshtml";
+}
+
+<section class="detail-hero text-white position-relative mb-5">
+    <div class="detail-overlay"></div>
+    <div class="container position-relative">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 text-center">
+                <h1 class="fw-bold mb-2">Admin Giriş</h1>
+                <div class="text-white-50">Lütfen kullanıcı adı ve şifrenizi giriniz</div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-5 col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4 p-lg-5">
+                    @if (!string.IsNullOrEmpty(ViewBag.Mesaj as string))
+                    {
+                        <div class="alert alert-danger" role="alert">@ViewBag.Mesaj</div>
+                    }
+                    <form asp-action="Login" method="post" novalidate>
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
+                            <input asp-for="UserName" class="form-control" placeholder="Kullanıcı adınız" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-2">
+                            <label asp-for="Password" class="form-label">Şifre</label>
+                            <input asp-for="Password" class="form-control" type="password" placeholder="Şifreniz" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Giriş Yap</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

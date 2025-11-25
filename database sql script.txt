@@ -1,0 +1,916 @@
+/****** Object:  Database [BlogSitesiDB]    Script Date: 18.09.2025 14:23:46 ******/
+CREATE DATABASE [BlogSitesiDB]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'BlogSitesiDB', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\BlogSitesiDB.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'BlogSitesiDB_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\BlogSitesiDB_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [BlogSitesiDB] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [BlogSitesiDB].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [BlogSitesiDB] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [BlogSitesiDB] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [BlogSitesiDB] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [BlogSitesiDB] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [BlogSitesiDB] SET READ_COMMITTED_SNAPSHOT ON 
+GO
+ALTER DATABASE [BlogSitesiDB] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET RECOVERY FULL 
+GO
+ALTER DATABASE [BlogSitesiDB] SET  MULTI_USER 
+GO
+ALTER DATABASE [BlogSitesiDB] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [BlogSitesiDB] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [BlogSitesiDB] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [BlogSitesiDB] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'BlogSitesiDB', N'ON'
+GO
+ALTER DATABASE [BlogSitesiDB] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [BlogSitesiDB] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[__EFMigrationsHistory](
+	[MigrationId] [nvarchar](150) NOT NULL,
+	[ProductVersion] [nvarchar](32) NOT NULL,
+ CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+(
+	[MigrationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Blogs]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Blogs](
+	[BlogID] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [nvarchar](100) NOT NULL,
+	[BlogText] [nvarchar](max) NOT NULL,
+	[BlogContext] [nvarchar](max) NOT NULL,
+	[BlogDate] [datetime2](7) NOT NULL,
+	[BlogPhoto] [nvarchar](255) NULL,
+ CONSTRAINT [PK_Blogs] PRIMARY KEY CLUSTERED 
+(
+	[BlogID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Contacts]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Contacts](
+	[ContactID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Surname] [nvarchar](50) NOT NULL,
+	[Email] [nvarchar](255) NOT NULL,
+	[Message] [nvarchar](max) NOT NULL,
+	[IsRead] [bit] NOT NULL,
+ CONSTRAINT [PK_Contacts] PRIMARY KEY CLUSTERED 
+(
+	[ContactID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Projects]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Projects](
+	[ProjectID] [int] IDENTITY(1,1) NOT NULL,
+	[ProjectTitle] [nvarchar](100) NOT NULL,
+	[ProjectDesc] [nvarchar](max) NOT NULL,
+	[ProjectDate] [datetime2](7) NOT NULL,
+	[ProjectPhoto] [nvarchar](255) NULL,
+ CONSTRAINT [PK_Projects] PRIMARY KEY CLUSTERED 
+(
+	[ProjectID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[UserID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](50) NOT NULL,
+	[Surname] [nvarchar](50) NOT NULL,
+	[UserName] [nvarchar](20) NOT NULL,
+	[Password] [nvarchar](10) NOT NULL,
+	[Role] [nvarchar](10) NOT NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20250916223719_blogProje', N'8.0.20')
+GO
+SET IDENTITY_INSERT [dbo].[Blogs] ON 
+GO
+INSERT [dbo].[Blogs] ([BlogID], [Title], [BlogText], [BlogContext], [BlogDate], [BlogPhoto]) VALUES (4, N'Asp.Net Core MVC Hakkında Bilmeniz Gerekenler', N'Asp.Net Core MVC nedir? Asp.Net Core MVC ne işe yarar? Techcareer.net olarak Teknoloji Yeteneğinin Kod Günlüğü ile teknoloji dünyasındaki merak ettiklerinizi yanıtlıyorum.', N'<h2>Asp.Net Core MVC Hakkında Bilmeniz Gerekenler</h2>
+
+<p>Asp.Net Core MVC, Microsoft tarafından geliştirilen bir web uygulama &ccedil;atısıdır. Bu &ccedil;atı, .Net Core&#39;un bir par&ccedil;asıdır ve a&ccedil;ık kaynak kodlu bir projedir. Asp.Net Core MVC, web uygulamaları geliştirmek i&ccedil;in kullanılan bir ara&ccedil;tır ve geliştiricilere bir&ccedil;ok avantaj sağlar.</p>
+
+<p><strong>Asp.Net Core MVC&nbsp;</strong>hakkında ilk bilmeniz gereken bu &ccedil;atıyı kullanarak web uygulamaları geliştirmek isteyenler i&ccedil;in &ouml;nemli bir kaynak niteliğinde olmasıdır. Bu kaynak, Asp.Net Core MVC&#39;nin temel &ouml;zelliklerini ve nasıl kullanılabileceğini anlatmaktadır.</p>
+
+<p>Asp.Net Core MVC, a&ccedil;ık kaynak kodlu olması ve .Net Core ile uyumlu olması nedeniyle bir&ccedil;ok geliştiricinin tercih ettiği bir ara&ccedil;tır. Bu ara&ccedil; sayesinde, web uygulamaları geliştirmek daha kolay ve daha verimli hale gelmektedir. Asp.Net Core MVC, bu aracı kullanarak web uygulamaları geliştirmek isteyenler i&ccedil;in faydalı bir kaynaktır.</p>
+
+<h2>Asp.Net Core MVC Nedir?</h2>
+
+<p><strong>Asp.Net Core MVC nedir&nbsp;</strong>sorusu web uygulaması geliştirmek isteyenlerin cevabını merak ettiği bir konudur. MVC, a&ccedil;ılımı<strong>&nbsp;Model-View-Controller</strong>&nbsp;olan bir web uygulama mimarisidir. Bu mimari, bir web uygulamasının tasarımını ve işlevselliğini birbirinden ayırmak i&ccedil;in kullanılır. Model, uygulamanın veri modelini temsil eder. View, kullanıcının uygulama ile etkileşim kurduğu aray&uuml;z&uuml; temsil eder. Controller, kullanıcının yaptığı işlemleri y&ouml;netir ve veri modeli ile aray&uuml;z arasında iletişim kurar.</p>
+
+<h2>Asp.Net Core MVC&#39;nin Avantajları</h2>
+
+<p><strong>Asp.Net Core</strong>&nbsp;MVC&rsquo;nin avantajları aşağıdaki gibi sıralanabilir:</p>
+
+<ul>
+	<li>&Ouml;l&ccedil;eklenebilir bir uygulama geliştirme mimarisidir.</li>
+	<li>Uygulamanın farklı katmanlarını birbirinden bağımsız olarak test etmenizi sağlar.</li>
+	<li>Uygulamanın bakımını kolaylaştırır. &Ccedil;&uuml;nk&uuml; her bir katmanın sorumlulukları ayrıdır.</li>
+	<li>Uygulamanın g&uuml;venliğini artırır. &Ccedil;&uuml;nk&uuml; veri modeli ile aray&uuml;z arasındaki iletişim kontrol edilir.</li>
+</ul>
+
+<p>Asp.Net Core MVC, web uygulamaları geliştirmek i&ccedil;in olduk&ccedil;a pop&uuml;ler bir &ccedil;&ouml;z&uuml;md&uuml;r. Bu sebeple sıklıkla web uygulamaları geliştirenler tarafından sıklıkla tercih edilir.</p>
+
+<h2>Asp.Net Core MVC&#39;nin Dezavantajları</h2>
+
+<p>Asp.Net Core MVC&rsquo;nin dezavantajları i&ccedil;in şunlar s&ouml;ylenebilir:</p>
+
+<ul>
+	<li>&Ouml;ğrenmesi diğer web uygulama mimarilerine g&ouml;re daha zordur.</li>
+	<li>Uygulamanın geliştirilmesi i&ccedil;in daha fazla kod yazmanız gerekebilir.</li>
+</ul>
+
+<p>Bu dezavantajlar, ASP.NET Core MVC&#39;nin avantajlarına g&ouml;re daha k&uuml;&ccedil;&uuml;k kalmaktadır ve &ccedil;oğu durumda, bu dezavantajlar, doğru şekilde ele alındığında kolayca &ccedil;&ouml;z&uuml;lebilir.</p>
+
+<h2>Asp.Net Core MVC Uygulama Geliştirme S&uuml;reci</h2>
+
+<p>Asp.Net Core MVC, modern web uygulamaları geliştirmek i&ccedil;in kullanılan bir frameworkt&uuml;r. Uygulama geliştirme s&uuml;reci, genellikle aşağıdaki adımları i&ccedil;erir:</p>
+
+<ul>
+	<li><strong>İhtiya&ccedil; analizi:&nbsp;</strong>Uygulamanın gereksinimleri belirlenir.</li>
+	<li><strong>Tasarım:&nbsp;</strong>Uygulamanın tasarımı yapılır.</li>
+	<li><strong>Geliştirme:&nbsp;</strong>Uygulama geliştirilir.</li>
+	<li><strong>Test:&nbsp;</strong>Uygulama test edilir.</li>
+	<li><strong>Yayınlama:&nbsp;</strong>Uygulama yayınlanır.</li>
+</ul>
+
+<p>Asp.Net Core MVC, tasarım ve geliştirme aşamalarında MVC (Model-View-Controller) tasarım kalıbını kullanır. Bu tasarım kalıbı, uygulamanın farklı katmanlarını birbirinden bağımsız hale getirerek uygulamanın daha kolay y&ouml;netilmesini sağlar.</p>
+
+<h2>Asp.Net Core MVC Uygulama Yapılandırması</h2>
+
+<p>Asp.Net Core MVC uygulama yapısı, genellikle aşağıdaki bileşenleri i&ccedil;erir:</p>
+
+<p><strong>Models:</strong>&nbsp;Uygulamanın veri modeli.<br />
+<strong>Views:&nbsp;</strong>Uygulamanın kullanıcı aray&uuml;z&uuml;.<br />
+<strong>Controllers:&nbsp;</strong>Uygulamanın iş mantığını y&ouml;neten bileşen.<br />
+<strong>Startup.cs:&nbsp;</strong>Uygulamanın başlangı&ccedil; ayarlarını yapılandıran sınıf.<br />
+<strong>appsettings.json:&nbsp;</strong>Uygulamanın yapılandırma ayarlarını i&ccedil;eren dosya.</p>
+
+<p>Bu bileşenler, uygulamanın yapısını ve &ccedil;alışma şeklini belirler. Uygulama yapısını doğru bir şekilde yapılandırmak, uygulamanın daha iyi performans g&ouml;stermesini ve daha kolay y&ouml;netilmesini sağlar.</p>
+
+<h2>Asp.Net Core MVC Uygulama Test S&uuml;reci</h2>
+
+<p>Test s&uuml;reci, uygulamanın doğru &ccedil;alıştığını ve beklenen sonu&ccedil;ları &uuml;rettiğini doğrulamak i&ccedil;in kullanılır. Asp.Net Core MVC uygulama test s&uuml;reci aşağıdaki adımları i&ccedil;erir:</p>
+
+<ul>
+	<li><strong>Birim Testleri:&nbsp;</strong>Uygulamanın k&uuml;&ccedil;&uuml;k par&ccedil;alarını test etmek i&ccedil;in kullanılır. Bu testler, bir metot veya sınıf gibi k&uuml;&ccedil;&uuml;k bir par&ccedil;ayı test eder.<br />
+	&nbsp;</li>
+	<li><strong>Entegrasyon Testleri:&nbsp;</strong>Uygulamanın farklı par&ccedil;alarını birleştirdiğinde doğru &ccedil;alıştığını doğrulamak i&ccedil;in kullanılır.<br />
+	&nbsp;</li>
+	<li><strong>Kabul Testleri:&nbsp;</strong>Uygulamanın t&uuml;m&uuml;n&uuml; test etmek i&ccedil;in kullanılır. Bu testler, uygulamanın kullanım senaryolarını takip eder ve beklenen sonu&ccedil;ları doğrular.</li>
+</ul>
+
+<p>ASP.NET Core MVC uygulamaları i&ccedil;in test s&uuml;reci, uygulamanın kalitesini artırmak ve hataları en aza indirmek i&ccedil;in &ouml;nemlidir.</p>
+
+<h2>Asp.Net Core MVC Uygulama Test Aracı</h2>
+
+<p>Asp.Net Core MVC uygulama test etmek i&ccedil;in bir&ccedil;ok ara&ccedil; mevcuttur. Bu ara&ccedil;lar, birim testleri, entegrasyon testleri ve kabul testleri i&ccedil;in kullanılabilir. En pop&uuml;ler Asp.Net Core MVC uygulama test ara&ccedil;ları şunlardır:</p>
+
+<ul>
+	<li><strong>XUnit:&nbsp;</strong>&Ouml;l&ccedil;eklenebilir bir birim test &ccedil;er&ccedil;evesidir. .Net Core ile uyumludur.</li>
+	<li><strong>Mog:</strong>&nbsp;.Net Core ile uyumlu bir mock nesne k&uuml;t&uuml;phanesidir.</li>
+	<li><strong>Selenium:</strong>&nbsp;Kabul testleri i&ccedil;in kullanılan bir ara&ccedil;tır. Web tarayıcısını otomatik olarak kontrol eder ve test senaryolarını &ccedil;alıştırır.</li>
+</ul>
+
+<p>Asp.Net Core MVC&rsquo;yi test etmek i&ccedil;in kullanılan diğer ara&ccedil;lar arasında NUnit, MSTest, NUnitLite, ve FluentAssertions yer almaktadır.</p>
+
+<h2>Asp.Net Core MVC&rsquo;nin Kullanım Alanları</h2>
+
+<p>ASP.NET Core MVC, bir web uygulamasında model, g&ouml;r&uuml;n&uuml;m ve denetleyiciler oluşturmanızı sağlar. ASP.NET Core MVC, Microsoft tarafından geliştirilen bir &ccedil;er&ccedil;eve olup, .NET Core k&uuml;t&uuml;phanesi &uuml;zerine inşa edilmiştir. ASP.NET Core MVC&#39;nin kullanım alanları şunlardır:</p>
+
+<ul>
+	<li><strong>Web Uygulamaları:&nbsp;</strong>ASP.NET Core MVC, web uygulamaları oluşturmak i&ccedil;in olduk&ccedil;a pop&uuml;ler bir se&ccedil;enektir. Bu framework, web uygulamalarının geliştirilmesinde hızlı ve kolay bir yaklaşım sunar.<br />
+	&nbsp;</li>
+	<li><strong>Web API&#39;leri:&nbsp;</strong>ASP.NET Core MVC, web API&#39;leri oluşturmak i&ccedil;in de kullanılabilir. Bu, uygulama geliştiricilerinin, veri kaynaklarına erişen ve dış d&uuml;nyaya hizmet veren web hizmetleri oluşturmalarını sağlar.<br />
+	&nbsp;</li>
+	<li><strong>&Ouml;l&ccedil;eklenebilir Web Uygulamaları:</strong>&nbsp;ASP.NET Core MVC, y&uuml;ksek trafikli web uygulamalarını y&ouml;netmek i&ccedil;in tasarlanmıştır. Bu sayede, b&uuml;y&uuml;k &ouml;l&ccedil;ekli web uygulamalarını kolaylıkla &ouml;l&ccedil;eklendirmek m&uuml;mk&uuml;nd&uuml;r.</li>
+</ul>
+
+<p>İşlevsel olarak web uygulamalarının model-view-controller (MVC) mimarisini takip ederek sunucu tarafı kodlama ve istemci tarafı aray&uuml;z tasarımını birbirinden ayrı tutar. Bu sayede, uygulama geliştirme s&uuml;recinde daha esnek bir yaklaşım sunar.</p>
+
+<h2>ASP.NET Core MVC Uygulamalarında G&uuml;venlik</h2>
+
+<p>ASP.NET Core MVC uygulamalarında g&uuml;venlik, kullanıcı verilerinin korunması ve yetkisiz erişimlerin &ouml;nlenmesi i&ccedil;in olduk&ccedil;a &ouml;nemlidir. İşte ASP.NET Core MVC uygulamalarında g&uuml;venlik i&ccedil;in bazı &ouml;nemli adımlar:</p>
+
+<ul>
+	<li><strong>Kimlik Doğrulama:</strong>&nbsp;ASP.NET Core MVC uygulamalarında kullanıcıların kimliklerini doğrulamak i&ccedil;in kullanılır. Bu, kullanıcıların uygulamaya giriş yapması ve uygulamanın belirli &ouml;zelliklerine erişmesi i&ccedil;in gereklidir.<br />
+	&nbsp;</li>
+	<li><strong>Yetkilendirme:&nbsp;</strong>ASP.NET Core MVC uygulamalarında yetkilendirme, kullanıcıların belirli işlevlere veya &ouml;zelliklere erişmek i&ccedil;in yetkilendirilmesini sağlar. Rol tabanlı yetkilendirme, kullanıcıların belirli rollere atanmasını sağlar ve bu rollerin belirli işlevlere veya &ouml;zelliklere erişmesine izin verir.</li>
+</ul>
+
+<p>ASP.NET Core MVC uygulamalarında g&uuml;venliğin sağlanması, uygulama geliştiricilerinin ve uygulama y&ouml;neticilerinin sorumluluğundadır. Bu nedenle, uygulamaların g&uuml;venliği i&ccedil;in gerekli &ouml;nlemlerin alınması, kullanıcı verilerinin korunması ve yetkisiz erişimlerin &ouml;nlenmesi a&ccedil;ısınd an olduk&ccedil;a &ouml;nemlidir.</p>
+
+<h2>ASP.NET Core MVC ile &Uuml;st D&uuml;zey Geliştirme</h2>
+
+<p><strong>ASP.NET Core MVC hakkında bilmeniz gerekenleri&nbsp;</strong>&ouml;ğrenmek bu uygulama &ccedil;atısını kullanmanızı kolaylaştırır. ASP.NET Core MVC ile uygulama geliştirirken etkileşimi artırmanıza yardımcı olacak protokolleri değerlendirebilirsiniz.</p>
+
+<h3>SignalR</h3>
+
+<p><strong>SignalR</strong>, ger&ccedil;ek zamanlı bir web uygulama geliştirme k&uuml;t&uuml;phanesidir. SignalR, sunucu ve istemci arasında iki y&ouml;nl&uuml; iletişim sağlar ve sunucu tarafındaki verilerin otomatik olarak istemcilere g&ouml;nderilmesini sağlar. Bu, uygulamanızda ger&ccedil;ek zamanlı bildirimler, sohbet uygulamaları ve canlı veri g&uuml;ncellemeleri gibi &ouml;zellikler eklemek i&ccedil;in kullanılabilir.</p>
+
+<p>SignalR, ASP.NET Core MVC uygulamalarına kolayca entegre edilebilir. SignalR, birka&ccedil; adımda kurulabilir ve hızlı bir şekilde kullanılabilir hale getirilebilir. SignalR, uygulamanızda ger&ccedil;ek zamanlı &ouml;zellikler eklemek istiyorsanız kesinlikle &ouml;ğrenmeniz gereken bir k&uuml;t&uuml;phanedir.</p>
+
+<h3>Web API</h3>
+
+<p>ASP.NET Core MVC, Web API oluşturmak i&ccedil;in de kullanılabilir.<strong>&nbsp;Web API</strong>, uygulamanızın dış d&uuml;nyayla etkileşimde bulunmasına izin verir. Bu, uygulamanızın diğer uygulamalarla veri paylaşmasına ve entegre olmasına olanak tanır.<br />
+<br />
+Web API&#39;lerin kullanımı son zamanlarda artmıştır ve modern web uygulamalarının olmazsa olmazlarından biridir. ASP.NET Core MVC, Web API&#39;lerin oluşturulmasını kolaylaştırır ve birka&ccedil; adımda oluşturulabilir. Web API&#39;lerin kullanımı hakkında bilgi sahibi olmak, uygulamanızın daha esnek ve genişletilebilir hale gelmesine yardımcı olabilir.</p>
+', CAST(N'2024-06-19T00:00:00.0000000' AS DateTime2), N'ASP.NET Core logosu.png')
+GO
+INSERT [dbo].[Blogs] ([BlogID], [Title], [BlogText], [BlogContext], [BlogDate], [BlogPhoto]) VALUES (5, N'Kod Yazarken Karşılaştığım Zorluklar ve Çözümlerim: Bir Geliştiricinin Yolculuğu', N'Her yazılım geliştiricisinin karşılaştığı zorluklar vardır. Bu yazıda, kendi deneyimlerimden yola çıkarak en sık karşılaştığım problemleri ve bunları nasıl çözdüğümü paylaşıyorum. Debugging tekniklerinden problem çözme yaklaşımlarına kadar, pratik çözümler ve öğrendiğim dersler..', N'<p>Yazılım geliştirme s&uuml;reci hi&ccedil;bir zaman d&uuml;z bir &ccedil;izgi değildir. Her projede yeni zorluklarla karşılaşırız ve bu zorluklar bizi daha iyi geliştiriciler yapar. Bu yazıda, kendi deneyimlerimden yola &ccedil;ıkarak en sık karşılaştığım problemleri ve &ccedil;&ouml;z&uuml;mlerimi paylaşıyorum.</p>
+
+<p><span style="font-size:18px"><strong>1. Debugging: En B&uuml;y&uuml;k Dostum</strong></span></p>
+
+<p>İlk başladığımda debugging s&uuml;reci benim i&ccedil;in ger&ccedil;ek bir kabustu. Kod &ccedil;alışmıyor, hata mesajları anlaşılmıyor ve &ccedil;&ouml;z&uuml;m bulamıyordum. İşte &ouml;ğrendiğim teknikler:</p>
+
+<p>Debugging Stratejilerim:<br />
+- Console.WriteLine() Kullanımı: Basit ama etkili<br />
+- Breakpoint&#39;ler: Visual Studio&#39;da adım adım takip<br />
+- Logging: Serilog ile detaylı log kayıtları<br />
+- Unit Testler: K&uuml;&ccedil;&uuml;k par&ccedil;aları test etme</p>
+
+<p>&Ouml;rnek Debugging Senaryosu:<br />
+&quot;Entity Framework&#39;te veri kaydedilmiyor&quot; problemi ile karşılaştım. Saatlerce kod yazdım ama veritabanına hi&ccedil;bir şey kaydedilmiyordu.</p>
+
+<p>Yanlış yaklaşım:<br />
+public void CreateBlog(Blog blog)<br />
+{<br />
+&nbsp; &nbsp; _context.Blogs.Add(blog);<br />
+&nbsp; &nbsp; // SaveChanges() unutmuştum!<br />
+}</p>
+
+<p>Doğru yaklaşım:<br />
+public async Task CreateBlog(Blog blog)<br />
+{<br />
+&nbsp; &nbsp; _context.Blogs.Add(blog);<br />
+&nbsp; &nbsp; await _context.SaveChangesAsync(); // Bu satır eksikti!<br />
+}</p>
+
+<p><span style="font-size:18px"><strong>2. Performance Sorunları</strong></span></p>
+
+<p>İlk projelerimde performans konusunda &ccedil;ok hata yaptım. Sayfa y&uuml;klenmesi &ccedil;ok yavaştı ve kullanıcı deneyimi k&ouml;t&uuml;yd&uuml;.</p>
+
+<p>Performance İyileştirme Teknikleri:<br />
+- Async/Await: Asenkron programlama<br />
+- Lazy Loading: Gerektiğinde veri y&uuml;kleme<br />
+- Caching: Tekrarlanan işlemleri &ouml;nbellekleme<br />
+- Database Optimization: Index&#39;ler ve sorgu optimizasyonu</p>
+
+<p>Ger&ccedil;ek &Ouml;rnek:<br />
+Blog listesi sayfam 5 saniyede y&uuml;kleniyordu. Sorun: Her blog i&ccedil;in ayrı veritabanı sorgusu yapıyordum.</p>
+
+<p>Yavaş yaklaşım:<br />
+foreach (var blog in blogs)<br />
+{<br />
+&nbsp; &nbsp; var comments = _context.Comments.Where(c =&gt; c.BlogId == blog.Id).ToList();<br />
+&nbsp; &nbsp; // Her blog i&ccedil;in ayrı sorgu!<br />
+}</p>
+
+<p>Hızlı yaklaşım:<br />
+var blogsWithComments = _context.Blogs<br />
+&nbsp; &nbsp; .Include(b =&gt; b.Comments) // Tek sorguda hepsini getir<br />
+&nbsp; &nbsp; .ToList();</p>
+
+<p><span style="font-size:18px"><strong>3. Frontend-Backend Entegrasyonu</strong></span></p>
+
+<p>İlk başta frontend ve backend&#39;i ayrı d&uuml;ş&uuml;n&uuml;yordum. Bu yaklaşım b&uuml;y&uuml;k problemlere yol a&ccedil;tı.</p>
+
+<p>Entegrasyon Zorlukları:<br />
+- API Design: RESTful API tasarımı<br />
+- Data Transfer: JSON serialization<br />
+- Error Handling: Hata y&ouml;netimi<br />
+- State Management: Durum y&ouml;netimi</p>
+
+<p>&Ccedil;&ouml;z&uuml;m Yaklaşımım:<br />
+API Controller &ouml;rneği:<br />
+[ApiController]<br />
+[Route(&quot;api/[controller]&quot;)]<br />
+public class BlogController : ControllerBase<br />
+{<br />
+&nbsp; &nbsp; [HttpGet]<br />
+&nbsp; &nbsp; public async Task&lt;ActionResult&lt;List&lt;BlogDto&gt;&gt;&gt; GetBlogs()<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; try<br />
+&nbsp; &nbsp; &nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var blogs = await _blogService.GetAllBlogsAsync();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return Ok(blogs);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; catch (Exception ex)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return StatusCode(500, &quot;Sunucu hatası: &quot; + ex.Message);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p><span style="font-size:18px"><strong>4. Responsive Design Zorlukları</strong></span></p>
+
+<p>Mobil cihazlarda sitenin d&uuml;zg&uuml;n g&ouml;r&uuml;nmemesi b&uuml;y&uuml;k bir problemdi. Bootstrap &ouml;ğrenene kadar CSS ile uğraştım.</p>
+
+<p>Responsive Design &Ccedil;&ouml;z&uuml;mleri:<br />
+- Mobile-First: &Ouml;nce mobil tasarım<br />
+- Flexbox: Esnek layout&#39;lar<br />
+- Media Queries: Farklı ekran boyutları<br />
+- Bootstrap Grid: Hazır grid sistemi</p>
+
+<p>Bootstrap ile &Ccedil;&ouml;z&uuml;m:<br />
+Responsive card layout:<br />
+&lt;div class=&quot;row g-4&quot;&gt;<br />
+&nbsp; &nbsp; &lt;div class=&quot;col-xl-4 col-lg-6 col-md-6 col-sm-12&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;div class=&quot;card h-100&quot;&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;!-- Card i&ccedil;eriği --&gt;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;<br />
+&nbsp; &nbsp; &lt;/div&gt;<br />
+&lt;/div&gt;</p>
+
+<p><span style="font-size:18px"><strong>5. Veritabanı Tasarım Hataları</strong></span></p>
+
+<p>İlk veritabanı tasarımlarımda &ccedil;ok hata vardı. Normalization kurallarını bilmiyordum ve gereksiz tablolar oluşturuyordum.</p>
+
+<p>Veritabanı Tasarım Prensipleri:<br />
+- Normalization: Veri tekrarını &ouml;nleme<br />
+- Indexing: Sorgu performansını artırma<br />
+- Relationships: Doğru ilişki kurma<br />
+- Data Types: Uygun veri tipleri se&ccedil;me</p>
+
+<p>Migration &Ouml;rneği:<br />
+Doğru tablo tasarımı:<br />
+public class Blog<br />
+{<br />
+&nbsp; &nbsp; public int BlogID { get; set; }<br />
+&nbsp; &nbsp; public string Title { get; set; }<br />
+&nbsp; &nbsp; public string Content { get; set; }<br />
+&nbsp; &nbsp; public DateTime CreatedDate { get; set; }<br />
+&nbsp; &nbsp; public int UserID { get; set; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; // Navigation property<br />
+&nbsp; &nbsp; public User User { get; set; }<br />
+}</p>
+
+<p><span style="font-size:18px"><strong>6. Test Yazma Zorlukları</strong></span></p>
+
+<p>Test yazmanın &ouml;nemini ge&ccedil; anladım. &quot;Kod &ccedil;alışıyor, neden test yazayım?&quot; diye d&uuml;ş&uuml;n&uuml;yordum. B&uuml;y&uuml;k hata!</p>
+
+<p>Test Yazma Avantajları:<br />
+- Bug Prevention: Hataları &ouml;nceden yakalama<br />
+- Refactoring Safety: G&uuml;venli kod değişikliği<br />
+- Documentation: Kodun nasıl &ccedil;alıştığını g&ouml;sterme<br />
+- Confidence: Değişiklik yapma g&uuml;veni</p>
+
+<p>Unit Test &Ouml;rneği:<br />
+[Test]<br />
+public void CreateBlog_ValidData_ShouldReturnSuccess()<br />
+{<br />
+&nbsp; &nbsp; // Arrange<br />
+&nbsp; &nbsp; var blog = new Blog&nbsp;<br />
+&nbsp; &nbsp; {&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; Title = &quot;Test Blog&quot;,&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; Content = &quot;Test Content&quot;&nbsp;<br />
+&nbsp; &nbsp; };<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; // Act<br />
+&nbsp; &nbsp; var result = _blogService.CreateBlog(blog);<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; // Assert<br />
+&nbsp; &nbsp; Assert.IsTrue(result.IsSuccess);<br />
+&nbsp; &nbsp; Assert.AreEqual(&quot;Test Blog&quot;, result.Data.Title);<br />
+}</p>
+
+<p><span style="font-size:18px"><strong>7. &Ouml;ğrenme S&uuml;reci ve Kaynaklar</strong></span></p>
+
+<p>En b&uuml;y&uuml;k zorluğum doğru kaynakları bulmaktı. İnternette &ccedil;ok fazla bilgi var ama hangisi g&uuml;ncel ve doğru?</p>
+
+<p>&Ouml;nerdiğim Kaynaklar:<br />
+- Microsoft Docs: Resmi dok&uuml;mantasyon<br />
+- Stack Overflow: Problem &ccedil;&ouml;zme<br />
+- GitHub: A&ccedil;ık kaynak projeler<br />
+- YouTube: G&ouml;rsel &ouml;ğrenme<br />
+- Pluralsight: Profesyonel kurslar</p>
+
+<p><span style="font-size:18px"><strong>8. Problem &Ccedil;&ouml;zme Yaklaşımım</strong></span></p>
+
+<p>Zamanla geliştirdiğim sistematik problem &ccedil;&ouml;zme yaklaşımım:</p>
+
+<p>Problem &Ccedil;&ouml;zme Adımları:<br />
+1. Problemi Tanımla: Ne oluyor?<br />
+2. Araştır: Benzer problemler var mı?<br />
+3. Test Et: K&uuml;&ccedil;&uuml;k par&ccedil;alara b&ouml;l<br />
+4. Dok&uuml;mante Et: &Ccedil;&ouml;z&uuml;m&uuml; kaydet<br />
+5. Paylaş: Başkalarına yardım et</p>
+
+<p><span style="font-size:18px"><strong>9. En Değerli Derslerim</strong></span></p>
+
+<p>Bu yolculukta &ouml;ğrendiğim en değerli dersler:</p>
+
+<p>Altın Kurallar:<br />
+- &quot;Kod yazmadan &ouml;nce d&uuml;ş&uuml;n&quot; - Planlama &ccedil;ok &ouml;nemli<br />
+- &quot;Basit &ccedil;&ouml;z&uuml;mler en iyisidir&quot; - Karmaşık kod = karmaşık problem<br />
+- &quot;Hata yapmaktan korkma&quot; - Hatalar &ouml;ğrenme fırsatı<br />
+- &quot;S&uuml;rekli &ouml;ğren&quot; - Teknoloji hızla değişiyor<br />
+- &quot;Toplulukla paylaş&quot; - Bilgi paylaştık&ccedil;a &ccedil;oğalır</p>
+
+<p>Sonu&ccedil;: Zorluklar B&uuml;y&uuml;t&uuml;r</p>
+
+<p>Her zorluk, bizi daha iyi geliştiriciler yapar. &Ouml;nemli olan:<br />
+- Hatalardan ders &ccedil;ıkarmak<br />
+- S&uuml;rekli &ouml;ğrenmeye devam etmek<br />
+- Deneyimleri paylaşmak<br />
+- Toplulukla birlikte b&uuml;y&uuml;mek</p>
+
+<p>Gelecek yazılarımda bu konuları daha detaylı ele alacağım. &Ouml;zellikle debugging teknikleri ve performance optimizasyonu konularına odaklanacağım.</p>
+
+<p>Bu yazı, kendi deneyimlerimden yola &ccedil;ıkarak hazırladığım bir rehberdir. Sizin de benzer deneyimleriniz varsa, benimle iletişim kısmından paylaşabilirsiniz!</p>
+', CAST(N'2025-09-12T00:00:00.0000000' AS DateTime2), N'img.webp')
+GO
+INSERT [dbo].[Blogs] ([BlogID], [Title], [BlogText], [BlogContext], [BlogDate], [BlogPhoto]) VALUES (6, N'Frontend ve Backend Entegrasyonu: Modern Web Uygulamalarında Köprü Kurma Sanatı', N'Modern web uygulamalarında frontend ve backend''in uyumlu çalışması kritik önem taşır. Bu yazıda, API tasarımından veri akışına, hata yönetiminden güvenlik önlemlerine kadar frontend-backend entegrasyonunun tüm detaylarını ele alıyorum. Kendi projelerimde karşılaştığım zorluklar ve çözümler...', N'<p>Frontend ve Backend Entegrasyonu: K&ouml;pr&uuml; Kurma Sanatı</p>
+
+<p>Modern web geliştirmede frontend ve backend&#39;in uyumlu &ccedil;alışması, uygulamanın başarısını doğrudan etkiler. Bu yazıda, bu iki katman arasında nasıl sağlam k&ouml;pr&uuml;ler kurulacağını ve karşılaşılan zorlukları nasıl aşacağımızı ele alıyorum.</p>
+
+<p>1. API Tasarımı: Temel Taşlar</p>
+
+<p>API tasarımı, frontend-backend entegrasyonunun temelini oluşturur. İyi tasarlanmış bir API, hem geliştiricilerin işini kolaylaştırır hem de uygulamanın performansını artırır.</p>
+
+<p>RESTful API Prensipleri:<br />
+- GET: Veri okuma işlemleri<br />
+- POST: Yeni veri oluşturma<br />
+- PUT: Veri g&uuml;ncelleme (tamamen)<br />
+- PATCH: Veri g&uuml;ncelleme (kısmi)<br />
+- DELETE: Veri silme</p>
+
+<p>API Endpoint &Ouml;rnekleri:<br />
+GET /api/blogs - T&uuml;m blogları getir<br />
+GET /api/blogs/1 - ID&#39;si 1 olan blogu getir<br />
+POST /api/blogs - Yeni blog oluştur<br />
+PUT /api/blogs/1 - Blog g&uuml;ncelle<br />
+DELETE /api/blogs/1 - Blog sil</p>
+
+<p>Controller Tasarımı:<br />
+[ApiController]<br />
+[Route(&quot;api/[controller]&quot;)]<br />
+public class BlogController : ControllerBase<br />
+{<br />
+&nbsp; &nbsp; private readonly IBlogService _blogService;<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; public BlogController(IBlogService blogService)<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; _blogService = blogService;<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; [HttpGet]<br />
+&nbsp; &nbsp; public async Task&lt;ActionResult&lt;List&lt;BlogDto&gt;&gt;&gt; GetBlogs()<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; var blogs = await _blogService.GetAllBlogsAsync();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return Ok(blogs);<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; [HttpGet(&quot;{id}&quot;)]<br />
+&nbsp; &nbsp; public async Task&lt;ActionResult&lt;BlogDto&gt;&gt; GetBlog(int id)<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; var blog = await _blogService.GetBlogByIdAsync(id);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; if (blog == null)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return NotFound();<br />
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return Ok(blog);<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>2. Veri Transferi ve Serialization</p>
+
+<p>Frontend ve backend arasında veri transferi, JSON formatında ger&ccedil;ekleşir. Doğru serialization, performans ve g&uuml;venlik a&ccedil;ısından kritik &ouml;nem taşır.</p>
+
+<p>DTO (Data Transfer Object) Kullanımı:<br />
+public class BlogDto<br />
+{<br />
+&nbsp; &nbsp; public int Id { get; set; }<br />
+&nbsp; &nbsp; public string Title { get; set; }<br />
+&nbsp; &nbsp; public string Content { get; set; }<br />
+&nbsp; &nbsp; public DateTime CreatedDate { get; set; }<br />
+&nbsp; &nbsp; public string AuthorName { get; set; }<br />
+}</p>
+
+<p>Entity&#39;den DTO&#39;ya D&ouml;n&uuml;şt&uuml;rme:<br />
+public static class BlogMapper<br />
+{<br />
+&nbsp; &nbsp; public static BlogDto ToDto(this Blog blog)<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return new BlogDto<br />
+&nbsp; &nbsp; &nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Id = blog.BlogID,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Title = blog.Title,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Content = blog.BlogContext,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; CreatedDate = blog.BlogDate,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; AuthorName = blog.User?.Name<br />
+&nbsp; &nbsp; &nbsp; &nbsp; };<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>3. Hata Y&ouml;netimi ve Response Handling</p>
+
+<p>Frontend&#39;de hata y&ouml;netimi, kullanıcı deneyimini doğrudan etkiler. Backend&#39;den gelen hata mesajlarının doğru şekilde işlenmesi gerekir.</p>
+
+<p>Backend Hata Y&ouml;netimi:<br />
+[HttpPost]<br />
+public async Task&lt;ActionResult&lt;BlogDto&gt;&gt; CreateBlog(CreateBlogDto dto)<br />
+{<br />
+&nbsp; &nbsp; try<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; if (!ModelState.IsValid)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return BadRequest(ModelState);<br />
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; var blog = await _blogService.CreateBlogAsync(dto);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return CreatedAtAction(nameof(GetBlog), new { id = blog.Id }, blog);<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp; catch (ValidationException ex)<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return BadRequest(ex.Message);<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp; catch (Exception ex)<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return StatusCode(500, &quot;Sunucu hatası oluştu&quot;);<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>Frontend Hata Y&ouml;netimi:<br />
+async function createBlog(blogData) {<br />
+&nbsp; &nbsp; try {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; const response = await fetch(&#39;/api/blogs&#39;, {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; method: &#39;POST&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; headers: {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &#39;Content-Type&#39;: &#39;application/json&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; },<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; body: JSON.stringify(blogData)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; });<br />
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; if (!response.ok) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const errorData = await response.json();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throw new Error(errorData.message || &#39;Bir hata oluştu&#39;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; const newBlog = await response.json();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return newBlog;<br />
+&nbsp; &nbsp; } catch (error) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; console.error(&#39;Blog oluşturma hatası:&#39;, error);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; showErrorMessage(error.message);<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>4. Authentication ve Authorization</p>
+
+<p>Frontend-backend entegrasyonunda g&uuml;venlik, en kritik konulardan biridir. Token-based authentication, modern uygulamalarda yaygın olarak kullanılır.</p>
+
+<p>JWT Token Kullanımı:<br />
+Backend&#39;de token oluşturma:<br />
+public string GenerateJwtToken(User user)<br />
+{<br />
+&nbsp; &nbsp; var tokenHandler = new JwtSecurityTokenHandler();<br />
+&nbsp; &nbsp; var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; var tokenDescriptor = new SecurityTokenDescriptor<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; Subject = new ClaimsIdentity(new[] { new Claim(&quot;id&quot;, user.UserID.ToString()) }),<br />
+&nbsp; &nbsp; &nbsp; &nbsp; Expires = DateTime.UtcNow.AddDays(7),<br />
+&nbsp; &nbsp; &nbsp; &nbsp; SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)<br />
+&nbsp; &nbsp; };<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; var token = tokenHandler.CreateToken(tokenDescriptor);<br />
+&nbsp; &nbsp; return tokenHandler.WriteToken(token);<br />
+}</p>
+
+<p>Frontend&#39;de token kullanımı:<br />
+const token = localStorage.getItem(&#39;authToken&#39;);</p>
+
+<p>fetch(&#39;/api/blogs&#39;, {<br />
+&nbsp; &nbsp; headers: {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &#39;Authorization&#39;: `Bearer ${token}`,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &#39;Content-Type&#39;: &#39;application/json&#39;<br />
+&nbsp; &nbsp; }<br />
+});</p>
+
+<p>5. State Management ve Veri Akışı</p>
+
+<p>Frontend&#39;de state management, uygulamanın durumunu y&ouml;netmek i&ccedil;in kritik &ouml;nem taşır. Redux, Vuex gibi k&uuml;t&uuml;phaneler bu konuda yardımcı olur.</p>
+
+<p>Basit State Management &Ouml;rneği:<br />
+class BlogStore {<br />
+&nbsp; &nbsp; constructor() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; this.blogs = [];<br />
+&nbsp; &nbsp; &nbsp; &nbsp; this.loading = false;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; this.error = null;<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; async fetchBlogs() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; this.loading = true;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; this.error = null;<br />
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; try {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const blogs = await blogService.getBlogs();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.blogs = blogs;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; } catch (error) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.error = error.message;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; } finally {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.loading = false;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; async createBlog(blogData) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; try {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const newBlog = await blogService.createBlog(blogData);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.blogs.push(newBlog);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; } catch (error) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.error = error.message;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>6. Real-time Communication</p>
+
+<p>Modern uygulamalarda real-time iletişim, SignalR gibi teknolojilerle sağlanır. Bu, kullanıcı deneyimini &ouml;nemli &ouml;l&ccedil;&uuml;de artırır.</p>
+
+<p>SignalR Hub &Ouml;rneği:<br />
+public class BlogHub : Hub<br />
+{<br />
+&nbsp; &nbsp; public async Task JoinGroup(string groupName)<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; await Groups.AddToGroupAsync(Context.ConnectionId, groupName);<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; public async Task SendBlogUpdate(int blogId, string message)<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; await Clients.Group($&quot;blog-{blogId}&quot;).SendAsync(&quot;BlogUpdated&quot;, message);<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>Frontend SignalR Bağlantısı:<br />
+const connection = new signalR.HubConnectionBuilder()<br />
+&nbsp; &nbsp; .withUrl(&quot;/blogHub&quot;)<br />
+&nbsp; &nbsp; .build();</p>
+
+<p>connection.start().then(() =&gt; {<br />
+&nbsp; &nbsp; console.log(&quot;SignalR bağlantısı kuruldu&quot;);<br />
+});</p>
+
+<p>connection.on(&quot;BlogUpdated&quot;, (message) =&gt; {<br />
+&nbsp; &nbsp; console.log(&quot;Blog g&uuml;ncellendi:&quot;, message);<br />
+&nbsp; &nbsp; // UI&#39;yi g&uuml;ncelle<br />
+});</p>
+
+<p>7. Performance Optimizasyonu</p>
+
+<p>Frontend-backend entegrasyonunda performans, kullanıcı deneyimini doğrudan etkiler. &Ccedil;eşitli optimizasyon teknikleri uygulanabilir.</p>
+
+<p>Caching Stratejileri:<br />
+Backend&#39;de caching:<br />
+[ResponseCache(Duration = 300)] // 5 dakika cache<br />
+[HttpGet]<br />
+public async Task&lt;ActionResult&lt;List&lt;BlogDto&gt;&gt;&gt; GetBlogs()<br />
+{<br />
+&nbsp; &nbsp; var blogs = await _cache.GetOrCreateAsync(&quot;blogs&quot;, async entry =&gt;<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return await _blogService.GetAllBlogsAsync();<br />
+&nbsp; &nbsp; });<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; return Ok(blogs);<br />
+}</p>
+
+<p>Frontend&#39;de caching:<br />
+class BlogCache {<br />
+&nbsp; &nbsp; constructor() {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; this.cache = new Map();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; this.cacheTimeout = 5 * 60 * 1000; // 5 dakika<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; get(key) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; const item = this.cache.get(key);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; if (item &amp;&amp; Date.now() - item.timestamp &lt; this.cacheTimeout) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return item.data;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; return null;<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; set(key, data) {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; this.cache.set(key, {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; data: data,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; timestamp: Date.now()<br />
+&nbsp; &nbsp; &nbsp; &nbsp; });<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>8. Testing ve Debugging</p>
+
+<p>Frontend-backend entegrasyonunda test yazımı, uygulamanın g&uuml;venilirliğini artırır.</p>
+
+<p>Integration Test &Ouml;rneği:<br />
+[Test]<br />
+public async Task GetBlogs_ShouldReturnBlogs()<br />
+{<br />
+&nbsp; &nbsp; // Arrange<br />
+&nbsp; &nbsp; var client = _factory.CreateClient();<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; // Act<br />
+&nbsp; &nbsp; var response = await client.GetAsync(&quot;/api/blogs&quot;);<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; // Assert<br />
+&nbsp; &nbsp; response.EnsureSuccessStatusCode();<br />
+&nbsp; &nbsp; var blogs = await response.Content.ReadFromJsonAsync&lt;List&lt;BlogDto&gt;&gt;();<br />
+&nbsp; &nbsp; Assert.IsNotNull(blogs);<br />
+&nbsp; &nbsp; Assert.IsTrue(blogs.Count &gt; 0);<br />
+}</p>
+
+<p>Frontend Test &Ouml;rneği:<br />
+describe(&#39;BlogService&#39;, () =&gt; {<br />
+&nbsp; &nbsp; it(&#39;should fetch blogs successfully&#39;, async () =&gt; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; const mockBlogs = [<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; { id: 1, title: &#39;Test Blog&#39;, content: &#39;Test Content&#39; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; ];<br />
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; fetch.mockResolvedValueOnce({<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ok: true,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; json: async () =&gt; mockBlogs<br />
+&nbsp; &nbsp; &nbsp; &nbsp; });<br />
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; const blogs = await blogService.getBlogs();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; expect(blogs).toEqual(mockBlogs);<br />
+&nbsp; &nbsp; });<br />
+});</p>
+
+<p>9. Deployment ve Environment Management</p>
+
+<p>Farklı ortamlarda (development, staging, production) farklı konfig&uuml;rasyonlar gerekebilir.</p>
+
+<p>Environment Configuration:<br />
+Backend appsettings.json:<br />
+{<br />
+&nbsp; &nbsp; &quot;ApiSettings&quot;: {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &quot;BaseUrl&quot;: &quot;https://api.myapp.com&quot;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &quot;Timeout&quot;: 30000<br />
+&nbsp; &nbsp; },<br />
+&nbsp; &nbsp; &quot;Database&quot;: {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &quot;ConnectionString&quot;: &quot;Server=localhost;Database=BlogDB;&quot;<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>Frontend environment config:<br />
+const config = {<br />
+&nbsp; &nbsp; development: {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; apiUrl: &#39;http://localhost:5000/api&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; debug: true<br />
+&nbsp; &nbsp; },<br />
+&nbsp; &nbsp; production: {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; apiUrl: &#39;https://api.myapp.com/api&#39;,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; debug: false<br />
+&nbsp; &nbsp; }<br />
+};</p>
+
+<p>10. Monitoring ve Logging</p>
+
+<p>Uygulamanın sağlığını izlemek ve sorunları tespit etmek i&ccedil;in monitoring ve logging kritik &ouml;nem taşır.</p>
+
+<p>Structured Logging:<br />
+public class BlogController : ControllerBase<br />
+{<br />
+&nbsp; &nbsp; private readonly ILogger&lt;BlogController&gt; _logger;<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; public BlogController(ILogger&lt;BlogController&gt; logger)<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; _logger = logger;<br />
+&nbsp; &nbsp; }<br />
+&nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; [HttpGet]<br />
+&nbsp; &nbsp; public async Task&lt;ActionResult&lt;List&lt;BlogDto&gt;&gt;&gt; GetBlogs()<br />
+&nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; _logger.LogInformation(&quot;Blogs listesi isteniyor&quot;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<br />
+&nbsp; &nbsp; &nbsp; &nbsp; try<br />
+&nbsp; &nbsp; &nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; var blogs = await _blogService.GetAllBlogsAsync();<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; _logger.LogInformation(&quot;Blogs başarıyla getirildi. Toplam: {Count}&quot;, blogs.Count);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return Ok(blogs);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; &nbsp; &nbsp; catch (Exception ex)<br />
+&nbsp; &nbsp; &nbsp; &nbsp; {<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; _logger.LogError(ex, &quot;Blogs getirilirken hata oluştu&quot;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return StatusCode(500, &quot;Sunucu hatası&quot;);<br />
+&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp; &nbsp; }<br />
+}</p>
+
+<p>Sonu&ccedil;: Sağlam K&ouml;pr&uuml;ler Kurmak</p>
+
+<p>Frontend ve backend entegrasyonu, modern web uygulamalarının temelini oluşturur. Bu entegrasyonu başarılı kılmak i&ccedil;in:</p>
+
+<p>- API tasarımında RESTful prensipleri takip etmek<br />
+- Doğru hata y&ouml;netimi yapmak<br />
+- G&uuml;venlik &ouml;nlemlerini almak<br />
+- Performance optimizasyonu yapmak<br />
+- Test yazmak<br />
+- Monitoring ve logging uygulamak</p>
+
+<p>Bu konuları doğru şekilde uyguladığımızda, kullanıcı deneyimi y&uuml;ksek, g&uuml;venli ve performanslı uygulamalar geliştirebiliriz.</p>
+
+<p>Gelecek yazılarımda bu konuları daha detaylı ele alacağım. &Ouml;zellikle microservices mimarisi ve API Gateway konularına odaklanacağım.</p>
+
+<p>Bu yazı, frontend-backend entegrasyonu konusunda temel bilgileri i&ccedil;ermektedir. Sorularınızı yorumlarda paylaşabilirsiniz!</p>
+
+<p>Sonraki Yazılar:<br />
+- &quot;Microservices Mimarisi: B&uuml;y&uuml;k Uygulamaları Par&ccedil;alama&quot;<br />
+- &quot;API Gateway: Merkezi Y&ouml;netim&quot;<br />
+- &quot;GraphQL vs REST: Hangi Teknoloji Ne Zaman?&quot;</p>
+', CAST(N'2025-06-12T00:00:00.0000000' AS DateTime2), N'Frontend-vs.-Backend-Development.jpg')
+GO
+SET IDENTITY_INSERT [dbo].[Blogs] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Users] ON 
+GO
+INSERT [dbo].[Users] ([UserID], [Name], [Surname], [UserName], [Password], [Role]) VALUES (1, N'Sezen', N'Caba', N'Scaba', N'12345', N'Admin')
+GO
+INSERT [dbo].[Users] ([UserID], [Name], [Surname], [UserName], [Password], [Role]) VALUES (2, N'Damla', N'Çöl', N'Dcol', N'54321', N'User')
+GO
+SET IDENTITY_INSERT [dbo].[Users] OFF
+GO
+ALTER TABLE [dbo].[Contacts] ADD  CONSTRAINT [DF_Contacts_IsRead]  DEFAULT ((0)) FOR [IsRead]
+GO
+ALTER DATABASE [BlogSitesiDB] SET  READ_WRITE 
+GO

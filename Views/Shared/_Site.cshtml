@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>@ViewBag.Title</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap Icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+    <!-- SimpleLightbox plugin CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+
+    <style>
+        
+        .sl-overlay {
+            background: rgba(0, 0, 0, 0.9) !important; 
+            backdrop-filter: blur(4px); 
+        }
+
+        
+        .slbCaption {
+            position: relative !important;
+            bottom: auto !important;
+            top: auto !important;
+            background: rgba(33, 33, 33, 0.85) !important;
+            ı color: #f8f9fa !important; 
+            text-align: center !important;
+            padding: 20px !important;
+            font-size: 1rem !important;
+            line-height: 1.6;
+            margin-top: 20px !important;
+            display: block !important;
+            border-radius: 12px; 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.6); 
+            max-width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: 'Merriweather Sans', sans-serif; 
+        }
+
+            
+            .slbCaption p {
+                margin: 10px 0;
+                font-size: 0.95rem;
+                color: #ced4da; 
+            }
+    </style>
+
+</head>
+<body id="page-top">
+    <!-- Navigation-->
+    @RenderBody()
+
+    <partial name="_Navbar"></partial>
+    <partial name="_Header"></partial>
+    <partial name="_Blog"></partial>
+    <partial name="_Project"></partial>
+    <partial name="_Contact" model="new Contact()"></partial>
+    <partial name="_Footer"></partial>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SimpleLightbox plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>

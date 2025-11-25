@@ -1,0 +1,73 @@
+﻿@model Blog
+
+@{
+    ViewData["Title"] = "Blog Detayı";
+}
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="mb-0">Blog Yazısı Detayları</h2>
+            <div class="text-muted">Blog yazısının tüm bilgileri</div>
+        </div>
+        <div class="col-auto d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model?.BlogID" class="btn btn-primary">
+                <i class="bi bi-pencil me-2"></i>Düzenle
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-2"></i>Blog Listesi
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Blog Bilgileri</h5>
+                        <span class="badge bg-primary">Blog</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">Başlık</label>
+                            <div class="p-2 bg-light rounded">@Model.Title</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">Yayın Tarihi</label>
+                            <div class="p-2 bg-light rounded">@Model.BlogDate.ToLongDateString()</div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold text-muted">Ön Yazı</label>
+                            <div class="p-3 bg-light rounded">@Model.BlogText</div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.BlogPhoto))
+                        {
+                            <div class="col-12">
+                                <label class="form-label fw-semibold text-muted">Kapak Fotoğrafı</label>
+                                <div class="ratio ratio-16x9">
+                                    <img src="/images/Blogimg/@Model.BlogPhoto" class="img-fluid object-cover rounded" alt="@Model.Title" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h6 class="mb-0">Blog İçeriği</h6>
+                </div>
+                <div class="card-body">
+                    <div class="blog-content">
+                        @Html.Raw(Model.BlogContext)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

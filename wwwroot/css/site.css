@@ -1,0 +1,41 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/* Blog detay ana görseli ve içerik görselleri için boyutlandırma */
+.blog-detail-image {
+  max-width: 800px;
+}
+.blog-detail-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Editör içeriğinden gelen img etiketleri (BlogContext) */
+.blog-content img {
+  max-width: 100%;
+  height: auto !important;
+  display: block;
+  margin: 1rem 0;
+}

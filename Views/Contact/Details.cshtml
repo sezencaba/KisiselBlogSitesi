@@ -1,0 +1,51 @@
+@model SezenElifCaba_BlogSitesi.Models.Entities.Contact
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+}
+
+<div class="container px-3 px-lg-4">
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-9">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <strong>Mesaj Detayı</strong>
+                    <div class="d-flex gap-2">
+                        <form asp-action="Delete" method="post" onsubmit="return confirm('Mesaj silinsin mi?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@Model.ContactID" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                        </form>
+                        <a asp-action="Index" class="btn btn-sm btn-outline-secondary">Geri</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="text-muted">Ad Soyad</div>
+                            <div class="fw-semibold">@Model.Name @Model.Surname</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-muted">E-posta</div>
+                            <div class="fw-semibold">@Model.Email</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="text-muted">Durum</div>
+                        @if (Model.IsRead)
+                        {
+                            <span class="badge bg-success">Okundu</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Okunmadı</span>
+                        }
+                    </div>
+                    <div>
+                        <div class="text-muted mb-2">Mesaj</div>
+                        <div class="border rounded p-3 bg-light">@Model.Message</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

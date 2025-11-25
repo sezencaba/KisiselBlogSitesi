@@ -1,0 +1,30 @@
+﻿@model List<Project>
+
+<section id="portfolio" class="page-section bg-white">
+    <div class="container px-4 px-lg-5">
+        <div class="text-center mb-5">
+            <h2 class="mt-0">Projeler</h2>
+            <hr class="divider" />
+            <p class="text-muted">Üzerinde çalıştığım ve tamamladığım işler</p>
+        </div>
+        <div class="row gx-4 gx-lg-5">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="card h-100 shadow-sm blog-card">
+                        <div class="ratio ratio-16x9 overflow-hidden">
+                            <img class="card-img-top object-cover" src="/images/Projeimg/@item.ProjectPhoto" alt="@item.ProjectTitle" />
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <div class="small text-muted">@item.ProjectDate.ToShortDateString()</div>
+                            <h5 class="card-title">@item.ProjectTitle</h5>
+                            <div class="mt-auto">
+                                <a class="btn btn-outline-primary" asp-controller="Site" asp-action="Project" asp-route-id="@item.ProjectID">İncele</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

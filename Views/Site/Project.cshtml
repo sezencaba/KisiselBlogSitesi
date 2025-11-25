@@ -1,0 +1,38 @@
+@model SezenElifCaba_BlogSitesi.Models.Entities.Project
+@{
+    ViewData["Title"] = Model.ProjectTitle;
+    Layout = "~/Views/Shared/_SiteDetail.cshtml";
+}
+
+<section class="detail-hero text-white position-relative">
+    <div class="detail-overlay"></div>
+    <div class="container position-relative">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-9">
+                <h1 class="display-5 fw-bold mb-3">@Model.ProjectTitle</h1>
+                <div class="text-white-50">@Model.ProjectDate.ToLongDateString()</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-9">
+                @if (!string.IsNullOrEmpty(Model.ProjectPhoto))
+                {
+                    <div class="ratio ratio-16x9 mb-4">
+                        <img src="/images/Projeimg/@Model.ProjectPhoto" alt="@Model.ProjectTitle" class="w-100 h-100 object-cover rounded" />
+                    </div>
+                }
+                <div class="project-content">
+                    @Html.Raw(Model.ProjectDesc)
+                </div>
+                <div class="mt-5">
+                    <a class="btn btn-outline-secondary" asp-controller="Site" asp-action="Index">Ana sayfaya dön</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

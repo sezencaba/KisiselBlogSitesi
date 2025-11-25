@@ -1,0 +1,39 @@
+@model SezenElifCaba_BlogSitesi.Models.Entities.Blog
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_SiteDetail.cshtml";
+}
+
+<section class="detail-hero text-white position-relative">
+    <div class="detail-overlay"></div>
+    <div class="container position-relative">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-9">
+                <h1 class="display-5 fw-bold mb-3">@Model.Title</h1>
+                <div class="text-white-50">@Model.BlogDate.ToLongDateString()</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-9">
+                @if (!string.IsNullOrEmpty(Model.BlogPhoto))
+                {
+                    <div class="ratio ratio-16x9 mb-4">
+                        <img src="/images/Blogimg/@Model.BlogPhoto" alt="@Model.Title" class="w-100 h-100 object-cover rounded" />
+                    </div>
+                }
+                <div class="lead text-muted mb-4">@Model.BlogText</div>
+                <div class="blog-content">
+                    @Html.Raw(Model.BlogContext)
+                </div>
+                <div class="mt-5">
+                    <a class="btn btn-outline-secondary" asp-controller="Site" asp-action="Index">Ana sayfaya dön</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

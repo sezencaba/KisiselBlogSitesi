@@ -1,0 +1,50 @@
+﻿@model SezenElifCaba_BlogSitesi.Models.Entities.Contact
+<section class="page-section" id="contact">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">İletişim</h2>
+                <hr class="divider" />
+                <p class="text-muted mb-5">Görüş ve önerilerinizi bekliyorum.</p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6">
+                @if (TempData["ContactSuccess"] as string == "ok")
+                {
+                    <div class="alert alert-success" role="alert">Mesajınız alındı. En kısa sürede dönüş yapılacaktır.</div>
+                }
+                <form asp-controller="Site" asp-action="Contact" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Name" class="form-control" placeholder="Adınız" />
+                        <label asp-for="Name">Ad</label>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Surname" class="form-control" placeholder="Soyadınız" />
+                        <label asp-for="Surname">Soyad</label>
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="ornek@eposta.com" />
+                        <label asp-for="Email">E-posta</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea asp-for="Message" class="form-control" placeholder="Mesajınız" style="height: 10rem"></textarea>
+                        <label asp-for="Message">Mesaj</label>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-xl">Gönder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

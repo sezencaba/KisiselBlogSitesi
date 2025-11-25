@@ -1,0 +1,35 @@
+﻿@{
+
+    List<Blog> blogVeri = ViewBag.BlogYazilari;
+
+}
+
+
+<section class="page-section bg-light" id="about">
+    <div class="container px-4 px-lg-5">
+        <div class="text-center mb-5">
+            <h2 class="mt-0">En Yeni Blog Yazıları</h2>
+            <hr class="divider" />
+            <p class="text-muted">Güncel yazılarım ve notlarım</p>
+        </div>
+        <div class="row gx-4 gx-lg-5">
+            @foreach (var item in blogVeri)
+            {
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="card h-100 shadow-sm blog-card">
+                        <div class="ratio ratio-16x9 overflow-hidden">
+                            <img src="~/images/Blogimg/@item.BlogPhoto" alt="@item.Title" class="card-img-top object-cover" />
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text text-muted">@item.BlogText</p>
+                            <div class="mt-auto">
+                                <a class="btn btn-primary" asp-controller="Site" asp-action="Blog" asp-route-id="@item.BlogID">Detay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
