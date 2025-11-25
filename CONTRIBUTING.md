@@ -21,7 +21,7 @@ Sezen Elif CABA Blog Sitesi projesine katkıda bulunmak istediğiniz için teşe
 
 1. **Fork** yapın ve projeyi klonlayın
    ```bash
-   git clone https://github.com/kullaniciadi/SezenElifCaba_BlogSitesi.git
+   git clone https://github.com/sezencaba/KisiselBlogSitesi.git
    cd SezenElifCaba_BlogSitesi
    ```
 
