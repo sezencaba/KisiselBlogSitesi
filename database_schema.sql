@@ -1,0 +1,214 @@
+/****** Object:  Database [BlogSitesiDB]    Script Date: 18.09.2025 14:23:46 ******/
+-- Veritabanı oluşturma scripti
+-- SQL Server varsayılan yolu kullanılacaktır
+
+USE [master]
+GO
+
+IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'BlogSitesiDB')
+BEGIN
+    CREATE DATABASE [BlogSitesiDB]
+END
+GO
+
+USE [BlogSitesiDB]
+GO
+
+ALTER DATABASE [BlogSitesiDB] SET COMPATIBILITY_LEVEL = 160
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [BlogSitesiDB].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [BlogSitesiDB] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [BlogSitesiDB] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [BlogSitesiDB] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [BlogSitesiDB] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [BlogSitesiDB] SET READ_COMMITTED_SNAPSHOT ON 
+GO
+ALTER DATABASE [BlogSitesiDB] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET RECOVERY FULL 
+GO
+ALTER DATABASE [BlogSitesiDB] SET  MULTI_USER 
+GO
+ALTER DATABASE [BlogSitesiDB] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [BlogSitesiDB] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [BlogSitesiDB] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [BlogSitesiDB] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [BlogSitesiDB] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [BlogSitesiDB] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'BlogSitesiDB', N'ON'
+GO
+ALTER DATABASE [BlogSitesiDB] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [BlogSitesiDB] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+
+/****** Object:  Table [dbo].[__EFMigrationsHistory]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[__EFMigrationsHistory]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[__EFMigrationsHistory](
+        [MigrationId] [nvarchar](150) NOT NULL,
+        [ProductVersion] [nvarchar](32) NOT NULL,
+     CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY CLUSTERED 
+    (
+        [MigrationId] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+END
+GO
+
+/****** Object:  Table [dbo].[Blogs]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Blogs]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[Blogs](
+        [BlogID] [int] IDENTITY(1,1) NOT NULL,
+        [Title] [nvarchar](100) NOT NULL,
+        [BlogText] [nvarchar](max) NOT NULL,
+        [BlogContext] [nvarchar](max) NOT NULL,
+        [BlogDate] [datetime2](7) NOT NULL,
+        [BlogPhoto] [nvarchar](255) NULL,
+     CONSTRAINT [PK_Blogs] PRIMARY KEY CLUSTERED 
+    (
+        [BlogID] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+
+/****** Object:  Table [dbo].[Contacts]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Contacts]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[Contacts](
+        [ContactID] [int] IDENTITY(1,1) NOT NULL,
+        [Name] [nvarchar](50) NOT NULL,
+        [Surname] [nvarchar](50) NOT NULL,
+        [Email] [nvarchar](255) NOT NULL,
+        [Message] [nvarchar](max) NOT NULL,
+        [IsRead] [bit] NOT NULL,
+     CONSTRAINT [PK_Contacts] PRIMARY KEY CLUSTERED 
+    (
+        [ContactID] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+
+/****** Object:  Table [dbo].[Projects]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Projects]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[Projects](
+        [ProjectID] [int] IDENTITY(1,1) NOT NULL,
+        [ProjectTitle] [nvarchar](100) NOT NULL,
+        [ProjectDesc] [nvarchar](max) NOT NULL,
+        [ProjectDate] [datetime2](7) NOT NULL,
+        [ProjectPhoto] [nvarchar](255) NULL,
+     CONSTRAINT [PK_Projects] PRIMARY KEY CLUSTERED 
+    (
+        [ProjectID] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+END
+GO
+
+/****** Object:  Table [dbo].[Users]    Script Date: 18.09.2025 14:23:46 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND type in (N'U'))
+BEGIN
+    CREATE TABLE [dbo].[Users](
+        [UserID] [int] IDENTITY(1,1) NOT NULL,
+        [Name] [nvarchar](50) NOT NULL,
+        [Surname] [nvarchar](50) NOT NULL,
+        [UserName] [nvarchar](20) NOT NULL,
+        [Password] [nvarchar](10) NOT NULL,
+        [Role] [nvarchar](10) NOT NULL,
+     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+    (
+        [UserID] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+    ) ON [PRIMARY]
+END
+GO
+
+-- Constraints ve Default Values
+IF NOT EXISTS (SELECT * FROM sys.default_constraints WHERE name = 'DF_Contacts_IsRead')
+BEGIN
+    ALTER TABLE [dbo].[Contacts] ADD  CONSTRAINT [DF_Contacts_IsRead]  DEFAULT ((0)) FOR [IsRead]
+END
+GO
+
+
+
+ALTER DATABASE [BlogSitesiDB] SET  READ_WRITE 
+GO
+
